@@ -6,17 +6,11 @@
         
         <!-- Let's add Vue here -->
         <div id="app">
-            <h1> {{ title }} </h1>
-            <p>{{ description }}</p>
-            <a :href="link">{{ linkText }}</a>
 
-            <h2>{{ subtitle }}</h2>
-            
-            <input name="" v-model="field"/>
-            <p>The current value is: {{ field }}</p> 
+            <input name="field" v-model="fullName" />
 
-            <h3>{{ exclamation }}</h3>
-            <h3>{{ reversedMessage }}</h3>
+            <p>The current values is: {{ firstName }}</p>
+            <p>The current values is: {{ lastName }}</p>
 
         </div>
         
@@ -24,26 +18,21 @@
             var app = new Vue({
                 el: '#app',
                 data: {
-                    title: 'Learning Vue on Scrimba',
-                    subtitle: 'Other examples of using computed properties with Vue',
-                    description: 'This is an interactive lesson on how to remove the data from the DOM and put it on the Vue Instance.',
-                    link: 'https://vuejs.org',
-                    linkText: 'Visit Vue.JS',
-                    field: "",
+                    field = "",
                     firstName: "",
                     lastName: "",
                 },
                 computed: {
-                    exclamation: function() {
-                        if (this.field == "") {
-                            return this.field;
-                        } else {
-                            return this.field + '!!!';
-                        }
-                    }, 
+                    fullNeme: {
+                        get: function() {
+                            return this.firstName + " " + this.lastName;
+                        },
+                        set: function(newValue) {
+                            var names = newValue.split(" ");
 
-                    reversedMessage: function() {
-                        return this.exclamation.split('').reverse().join('');
+                            this.firstName = names[0];
+                            this.lastName = names[1];
+                        }
                     }
                 }
             });
