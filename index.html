@@ -7,10 +7,11 @@
         <!-- Let's add Vue here -->
         <div id="app">
 
-            <input name="field" v-model="fullName" />
+            <input name="field" v-model="field" />
 
-            <p>The current values is: {{ firstName }}</p>
-            <p>The current values is: {{ lastName }}</p>
+            <p>The current value is {{ field }}</p>
+
+            <button @click="modified">Click ME</button>
 
         </div>
         
@@ -18,21 +19,11 @@
             var app = new Vue({
                 el: '#app',
                 data: {
-                    field = "",
-                    firstName: "",
-                    lastName: "",
+                    field: "",
                 },
-                computed: {
-                    fullNeme: {
-                        get: function() {
-                            return this.firstName + " " + this.lastName;
-                        },
-                        set: function(newValue) {
-                            var names = newValue.split(" ");
-
-                            this.firstName = names[0];
-                            this.lastName = names[1];
-                        }
+                methods: {
+                    modified: function() {
+                        this.field += "!";
                     }
                 }
             });
