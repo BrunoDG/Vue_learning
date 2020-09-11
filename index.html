@@ -6,25 +6,75 @@
         
         <!-- Let's add Vue here -->
         <div id="app">
+            
+            <h1>Contact Form</h1>
+            
+            <p style="color: red;">{{ error }}</p>
 
-            <input name="field" v-model="field" />
+            <form method="post" action="#">
+                <div>
+                    <label for="name">Name</label>
+                    <input name="name" id="name" v-model="form.name"/>
+                    <p style="color: red;">{{ nameValidation }}</p>
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input name="email" id="email" v-model="form.email" />
+                    <p style="color: red;">{{ emailValidation }}</p>
+                </div>
+                <div>
+                    <label for="message">Message</label>
+                    <textarea name="message" id="message" v-model="form.message"></textarea>
+                    <p style="color: red;">{{ messageValidation }}</p>
+                </div>
+                
+                <button @click.prevent="">Send Form</button>
+            </form>
 
-            <p>The current value is {{ field }}</p>
-
-            <button @click="modified">Click ME</button>
-
+            <h2>Form Details</h2>
+            
+            <p><strong>Name:</strong> {{ form.name }}</p>
+            <p><strong>Email:</strong> {{ form.email }} </p>
+            <p><strong>Message:</strong> {{ form.message }} </p> 
+            
         </div>
         
         <script>
             var app = new Vue({
                 el: '#app',
                 data: {
-                    field: "",
+                    form: {
+                        name: "",
+                        email: "",
+                        message: "",
+                    },
+                    error: "",
                 },
-                methods: {
-                    modified: function() {
-                        this.field += "!";
+                method: {
+                    validateForm: function() {
+                        if (this.form.name.length && this.form.email.length && this.form.message.length) { 
+                            return this.error = "Form sent!"; 
+                        }
+
+                        return this.error = "Invalid form";                        
                     }
+                }, 
+                computed: {
+                    nameValidation: function() {
+                        if ( !this.form.name.length && this.error ) {
+                            return "Name field is required";
+                        }
+                    },
+                    emailValidation: function() {
+                        if ( !this.form.email.length && this.error ) {
+                            return "Email field is required";
+                        }
+                    },
+                    messageValidation: function() {
+                        if ( !this.form.message.length && this.error ) {
+                            return "Message field is required";
+                        }
+                    },
                 }
             });
         </script>
